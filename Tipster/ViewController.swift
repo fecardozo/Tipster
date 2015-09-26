@@ -18,6 +18,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var totalLabel: UILabel!
     @IBOutlet weak var billAmountField: UITextField!
     @IBOutlet weak var tipControl: UISegmentedControl!
+    @IBOutlet weak var numberOfPeopleField: UITextField!
     
     // connection is made by holding comand key and drag
     
@@ -25,6 +26,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        numberOfPeopleField.text = "1"
         tipAmountLabel.text = "$0.00"
         totalLabel.text = "$0.00"
         
@@ -43,14 +45,19 @@ class ViewController: UIViewController {
         
         let tipPercentages = [0.18, 0.20, 0.23]
         let tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
+        var numberOfPeople = NSString(string: numberOfPeopleField.text!).doubleValue
         let billAmount = NSString (string: billAmountField.text!).doubleValue
         let tipAmount = billAmount * tipPercentage
-        let total = billAmount + tipAmount
         
         
+        if (numberOfPeople < 1) {
+            numberOfPeople = 1
+        }
+        let total = (billAmount + tipAmount) / numberOfPeople
         
         tipAmountLabel.text = "$\(tipAmount)"
         totalLabel.text = "$\(total)"
+        
         
         print(tipControl.selectedSegmentIndex)
 
